@@ -447,12 +447,16 @@ func CurrentRoute(r *http.Request) *Route {
 
 func requestWithVars(r *http.Request, vars map[string]string) *http.Request {
 	ctx := context.WithValue(r.Context(), varsKey, vars)
-	return r.WithContext(ctx)
+	req := r.WithContext(ctx)
+	req.MultipartForm = r.MultipartForm
+	return req
 }
 
 func requestWithRoute(r *http.Request, route *Route) *http.Request {
 	ctx := context.WithValue(r.Context(), routeKey, route)
-	return r.WithContext(ctx)
+	req := r.WithContext(ctx)
+	req.MultipartForm = r.MultipartForm
+	return req
 }
 
 // ----------------------------------------------------------------------------
